@@ -221,17 +221,24 @@ namespace group_01
                 for (int i = 0; i < questions.Count; i++)
                 {
                     var q = questions[i];
-                    reviewText += $"Q{i + 1}: {q.QuestionText}\n";
-                    reviewText += $"Your Answer: {q.UserAnswer}, Correct: {q.CorrectAnswer}\n\n";
+                    reviewText += $"Q{i + 1}: {q.QuestionText}{Environment.NewLine}";
+                    reviewText += $"Your Answer: {q.UserAnswer}, Correct: {q.CorrectAnswer}{Environment.NewLine}{Environment.NewLine}";
                 }
                 SetRadioButtonsEnabled(!isSubmitted); // khóa nếu đã submit
 
-                MessageBox.Show(reviewText, "Review Answers", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowLongMessage(reviewText, "Review Answers");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+        public void ShowLongMessage(string text, string title)
+        {
+            Form messageForm = new Form() { Width = 600, Height = 400, Text = title };
+            System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox() { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical, Dock = DockStyle.Fill, Text = text };
+            messageForm.Controls.Add(textBox);
+            messageForm.ShowDialog();
         }
 
     }
